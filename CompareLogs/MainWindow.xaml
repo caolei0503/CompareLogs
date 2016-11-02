@@ -1,0 +1,38 @@
+﻿<Window x:Class="CompareLogsUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompareLogsUI"
+        mc:Ignorable="d"
+        Title="CompareTwoLogs" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="2"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style x:Key="StandardStyle">
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+                <EventSetter Event="ScrollViewer.ScrollChanged" Handler="StandardScrollChanged"/>
+            </Style>
+            <Style x:Key="TargetStyle">
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+                <EventSetter Event="ScrollViewer.ScrollChanged" Handler="TargetScrollChanged"/>
+            </Style>
+        </Grid.Resources>
+        
+        <Button Name="OpenStandardLog" Grid.Row="0" Grid.Column="0" Content="StandardLog" Width="80" HorizontalAlignment="Left"></Button>
+        <Button Name="OpenTargetLog" Grid.Row="0" Grid.Column="2" Content="TargetLog" Width="80" HorizontalAlignment="Left"></Button>
+        <RichTextBox Name="StandardLog" Grid.Row="2" Grid.Column="0" IsReadOnly="True" Style="{StaticResource StandardStyle}"/>
+        <RichTextBox Name="TargetLog" Grid.Row="2" Grid.Column="2" Style="{StaticResource TargetStyle}"/>
+        <ScrollViewer ScrollChanged="SynchronizeScrollChanged" Visibility="Visible" Grid.Row="2" Grid.Column="1"/>
+    </Grid>
+</Window>

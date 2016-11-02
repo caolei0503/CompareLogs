@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompareLogsUI", "CompareLogs\CompareLogsUI.csproj", "{B0387F32-3BA1-4AA3-B533-82055B53D255}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D} = {5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompareLogsParser", "CompareLogsParser\CompareLogsParser.csproj", "{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0387F32-3BA1-4AA3-B533-82055B53D255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0387F32-3BA1-4AA3-B533-82055B53D255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0387F32-3BA1-4AA3-B533-82055B53D255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0387F32-3BA1-4AA3-B533-82055B53D255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
