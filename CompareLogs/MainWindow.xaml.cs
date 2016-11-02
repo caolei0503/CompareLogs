@@ -50,6 +50,7 @@ namespace CompareLogsUI
             this.StandardLog.Document = Doc;
         }
        
+       //add a comment
         string LoadFilePath()
         {
             string fileFullName = string.Empty;
