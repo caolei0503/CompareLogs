@@ -50,13 +50,21 @@ namespace CompareLogsUI
         List<LogLineResult> TargetLogKeyLines;
         private void OpenStandardLog_Click(object sender, RoutedEventArgs e)
         {
-            string fileFullName = LoadFilePath();// @"D:\PL5\TasksForPractice\CommonLog\Logs\Debug.log";            
-            string keyword = "dbput";
-            StandardLogKeyLines = FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword);
+            try
+            {
+                string fileFullName = LoadFilePath();// @"D:\PL5\TasksForPractice\CommonLog\Logs\Debug.log";            
+                string keyword = "dbput";
+                StandardLogKeyLines = FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword);
 
-            keyword = "dbcc";
-            StandardLogKeyLines.AddRange(FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword));         
-            this.StandardLog.Document = LogLineResultsToTextBoxDoc(StandardLogKeyLines, Colors.Black, Colors.Black);
+                keyword = "dbcc";
+                StandardLogKeyLines.AddRange(FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword));
+                this.StandardLog.Document = LogLineResultsToTextBoxDoc(StandardLogKeyLines, Colors.Black, Colors.Black);
+            }
+            catch (Exception)
+            {
+
+             //   throw;
+            }            
         }
        
         
@@ -75,12 +83,19 @@ namespace CompareLogsUI
 
         string LoadFilePath()
         {
-            string fileFullName = string.Empty;       
-            OpenFileDialog dialog = new OpenFileDialog();//Create a new instance of the OpenFileDialog because it's an object.
-            dialog.Filter = "log files (*.log)|*.log|All files (*.*)|*.*";//Now set the file type
-            dialog.Title = "Select a log file";
-            dialog.RestoreDirectory = true;
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) fileFullName = dialog.FileName;
+            string fileFullName = string.Empty;
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();//Create a new instance of the OpenFileDialog because it's an object.
+                dialog.Filter = "log files (*.log)|*.log|All files (*.*)|*.*";//Now set the file type
+                dialog.Title = "Select a log file";
+                dialog.RestoreDirectory = true;
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) fileFullName = dialog.FileName;
+            }
+            catch (Exception)
+            {
+               // throw;
+            }            
             return fileFullName;
         }
         void UpdateResultsToTextBox()
