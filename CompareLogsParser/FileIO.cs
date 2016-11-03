@@ -19,9 +19,10 @@ namespace CompareLogsParser
             return strs;
         }
 
-        public static List<string> SelectLinesContainKeyword(List<string> strs, string keyword, bool regularMode = false)
+        public static List<LogLineResult> SelectLinesContainKeyword(List<string> strs, string keyword, bool regularMode = false)
         {
-            List<string> rtnList = new List<string>();
+            List<LogLineResult> rtnList = new List<LogLineResult>();
+            int i = 0;
             foreach (var item in strs)
             {
                 if(regularMode)
@@ -32,7 +33,15 @@ namespace CompareLogsParser
                 {
                     if(item.Contains(keyword))
                     {
-                        rtnList.Add(item.Remove(0,item.IndexOf(keyword)+keyword.Length));
+                        LogLineResult logLineResult = new LogLineResult()
+                        {
+                            Index =i,
+                            LineKeyword =keyword,
+                            LineContent = item.Remove(0, item.IndexOf(keyword) + keyword.Length),
+                            IsMatched =false
+                        };
+                        rtnList.Add(logLineResult);
+                        i++;
                     }
                 }
             }

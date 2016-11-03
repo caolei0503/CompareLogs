@@ -8,9 +8,10 @@
         Title="CompareTwoLogs" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="2"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="2"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -20,19 +21,26 @@
 
         <Grid.Resources>
             <Style x:Key="StandardStyle">
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="TextBlock.Foreground" Value="Black"/>
+                <Setter Property="TextBlock.FontSize" Value="12"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                 <EventSetter Event="ScrollViewer.ScrollChanged" Handler="StandardScrollChanged"/>
             </Style>
             <Style x:Key="TargetStyle">
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="TextBlock.FontSize" Value="12"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                 <EventSetter Event="ScrollViewer.ScrollChanged" Handler="TargetScrollChanged"/>
             </Style>
         </Grid.Resources>
         
         <Button Name="OpenStandardLog" Grid.Row="0" Grid.Column="0" Content="StandardLog" Width="80" HorizontalAlignment="Left"></Button>
         <Button Name="OpenTargetLog" Grid.Row="0" Grid.Column="2" Content="TargetLog" Width="80" HorizontalAlignment="Left"></Button>
+        <CheckBox Name="ShowLogDiff" Grid.Row="1" Grid.Column="2" FlowDirection="LeftToRight">
+            <TextBlock FlowDirection="LeftToRight" Text="Only Show Diff"/>
+        </CheckBox>
         <RichTextBox Name="StandardLog" Grid.Row="2" Grid.Column="0" IsReadOnly="True" Style="{StaticResource StandardStyle}"/>
         <RichTextBox Name="TargetLog" Grid.Row="2" Grid.Column="2" Style="{StaticResource TargetStyle}"/>
-        <ScrollViewer ScrollChanged="SynchronizeScrollChanged" Visibility="Visible" Grid.Row="2" Grid.Column="1"/>
+        <!--<ScrollViewer ScrollChanged="SynchronizeScrollChanged" Visibility="Visible" Grid.Row="2" Grid.Column="1"/>-->
+        <Separator Grid.Row="2" Grid.Column="1" />
     </Grid>
 </Window>

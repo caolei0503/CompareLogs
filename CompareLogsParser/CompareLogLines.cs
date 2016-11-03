@@ -8,75 +8,79 @@ namespace CompareLogsParser
 {
     public class CompareLogLines
     {
-        public List<string> StandardLogLines { get; set; }
-        public List<string> TargetLogLines { get; set; }
+        //public List<string> StandardLogLines { get; set; }
+        //public List<string> TargetLogLines { get; set; }
 
-        public List<LogLineResult> StandardLogLinesResults;
-        public List<LogLineResult> TargetLogLinesResults;
+        public List<LogLineResult> StandardLogLinesResults { get; private set; }
+        public List<LogLineResult> TargetLogLinesResults { get; private set; }
 
-        public CompareLogLines(List<string> standardLogLines, List<string> targetLogLines)
+        //public CompareLogLines(List<string> standardLogLines, List<string> targetLogLines)
+        //{
+        //    this.StandardLogLines = standardLogLines;
+        //    this.TargetLogLines = targetLogLines;
+        //    //InitLogLinesResults();
+        //}
+
+        public CompareLogLines(List<LogLineResult> standardLogLinesResults, List<LogLineResult> targetLogLinesResults)
         {
-            this.StandardLogLines = standardLogLines;
-            this.TargetLogLines = targetLogLines;
-            InitLogLinesResults();
+            this.StandardLogLinesResults = standardLogLinesResults;
+            this.TargetLogLinesResults = targetLogLinesResults;
         }
 
-        void InitLogLinesResults()
-        {
-            InitStandardLogLinesResults();
-            InitTargetLogLinesResults();
-        }
         public void ExecuteCompareLogs()
-        {            
-            int count = Math.Min(this.StandardLogLines.Count,this.TargetLogLines.Count);
+        {
+            int count = Math.Min(this.StandardLogLinesResults.Count, this.TargetLogLinesResults.Count);
             for (int i = 0; i < count; i++)
             {
-                if (StandardLogLines[i] == TargetLogLines[i])
+                if (StandardLogLinesResults[i].Equals(TargetLogLinesResults[i]))
                 {
                     TargetLogLinesResults[i].IsMatched = true;
+                    StandardLogLinesResults[i].IsMatched = true;
                 }
             }
         }
 
-        void InitStandardLogLinesResults()
-        {
-            StandardLogLinesResults = new List<LogLineResult>();
-            int i = 0;
-            foreach (var item in StandardLogLines)
-            {
-                LogLineResult standardLogLinesResult = new LogLineResult() { Index = i, LineContent=item, IsMatched=false };
-                StandardLogLinesResults.Add(standardLogLinesResult);
-            }
-        }
+        //void InitLogLinesResults()
+        //{
+        //    InitStandardLogLinesResults();
+        //    InitTargetLogLinesResults();
+        //}
+        //public void ExecuteCompareLogs()
+        //{            
+        //    int count = Math.Min(this.StandardLogLines.Count,this.TargetLogLines.Count);
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        if (StandardLogLines[i] == TargetLogLines[i])
+        //        {
+        //            TargetLogLinesResults[i].IsMatched = true;
+        //            StandardLogLinesResults[i].IsMatched = true;
+        //        }
+        //    }
+        //}
 
-        void InitTargetLogLinesResults()
-        {
-            TargetLogLinesResults = new List<LogLineResult>();
-            int i = 0;
-            foreach (var item in TargetLogLines)
-            {
-                LogLineResult targetLogLinesResult = new LogLineResult() { Index = i, LineContent = item, IsMatched = false };
-                TargetLogLinesResults.Add(targetLogLinesResult);
-            }
-        }
+        //void InitStandardLogLinesResults()
+        //{
+        //    StandardLogLinesResults = new List<LogLineResult>();
+        //    int i = 0;
+        //    foreach (var item in StandardLogLines)
+        //    {
+        //        LogLineResult standardLogLinesResult = new LogLineResult() { Index = i, LineContent=item, IsMatched=false };
+        //        StandardLogLinesResults.Add(standardLogLinesResult);
+        //        i++;
+        //    }
+        //}
+
+        //void InitTargetLogLinesResults()
+        //{
+        //    TargetLogLinesResults = new List<LogLineResult>();
+        //    int i = 0;
+        //    foreach (var item in TargetLogLines)
+        //    {
+        //        LogLineResult targetLogLinesResult = new LogLineResult() { Index = i, LineContent = item, IsMatched = false };
+        //        TargetLogLinesResults.Add(targetLogLinesResult);
+        //        i++;
+        //    }
+        //}
     }
 
-    public class LogLineResult
-    {
-        public int Index;
-        public string LineContent;
-       // public string LineKeyword;
-        public bool IsMatched;        
-    }
-
-    /// <summary>
-    /// reserve for future
-    /// different status, different color
-    /// </summary>
-    enum MatchStatus
-    {
-        Matched,
-        Alike,
-        TotallyDifferent
-    }
 }
