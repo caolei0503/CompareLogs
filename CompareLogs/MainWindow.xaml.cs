@@ -37,6 +37,13 @@ namespace CompareLogsUI
             this.OpenStandardLog.Click += OpenStandardLog_Click;
             this.OpenTargetLog.Click += OpenTargetLog_Click;
             this.ShowLogDiff.Click += ShowLogDiff_Click;
+            this.SearchKeyword.OnSearch += SearchKeyword_OnSearch;
+        }
+
+        private void SearchKeyword_OnSearch(object sender, RoutedEventArgs e)
+        {
+            CompareTwoLogs(this.SearchKeyword.Text);
+            UpdateResultsToTextBox();
         }
 
         bool isOnlyShowDifference = false;
@@ -46,38 +53,40 @@ namespace CompareLogsUI
             UpdateResultsToTextBox();
         }
 
+        List<string> StandardLogAllLines;
+        List<string> TargetLogAllLines;
         List<LogLineResult> StandardLogKeyLines;
         List<LogLineResult> TargetLogKeyLines;
         private void OpenStandardLog_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string fileFullName = LoadFilePath();// @"D:\PL5\TasksForPractice\CommonLog\Logs\Debug.log";            
+                StandardLogAllLines = FileIO.ReadFileAllLines(LoadFilePath());
+
                 string keyword = "dbput";
-                StandardLogKeyLines = FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword);
+                StandardLogKeyLines = FileIO.SelectLinesContainKeyword(this.StandardLogAllLines, keyword);
 
                 keyword = "dbcc";
-                StandardLogKeyLines.AddRange(FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword));
+                StandardLogKeyLines.AddRange(FileIO.SelectLinesContainKeyword(this.StandardLogAllLines, keyword));
+
                 this.StandardLog.Document = LogLineResultsToTextBoxDoc(StandardLogKeyLines, Colors.Black, Colors.Black);
             }
             catch (Exception)
             {
-
              //   throw;
             }            
-        }
-       
+        }   
         
         private void OpenTargetLog_Click(object sender, RoutedEventArgs e)
         {
-            string fileFullName = LoadFilePath();// @"D:\PL5\TasksForPractice\CommonLog\Logs\Debug_1.log";                   
+            TargetLogAllLines = FileIO.ReadFileAllLines(LoadFilePath());
 
             string keyword = "dbput";
-            TargetLogKeyLines = FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword);
+            TargetLogKeyLines = FileIO.SelectLinesContainKeyword(this.TargetLogAllLines, keyword);
             keyword = "dbcc";
-            TargetLogKeyLines.AddRange(FileIO.SelectLinesContainKeyword(FileIO.ReadFileAllLines(fileFullName), keyword));
+            TargetLogKeyLines.AddRange(FileIO.SelectLinesContainKeyword(this.TargetLogAllLines, keyword));
 
-            CompareTwoLogs();
+            CompareTwoLogs(this.StandardLogKeyLines,this.TargetLogKeyLines);
             UpdateResultsToTextBox();
         }
 
@@ -107,17 +116,16 @@ namespace CompareLogsUI
             }
             catch (Exception e)
             {
-
                 //throw e;
             }         
         }
 
         CompareLogLines compareLogs;
-        void CompareTwoLogs()
+        void CompareTwoLogs(List<LogLineResult> standardLogKeyLines, List<LogLineResult> targetLogKeyLines)
         {
             try
             {
-                compareLogs = new CompareLogLines(StandardLogKeyLines, TargetLogKeyLines);
+                compareLogs = new CompareLogLines(standardLogKeyLines, targetLogKeyLines);
                 compareLogs.ExecuteCompareLogs();
             }
             catch (Exception e)
@@ -125,107 +133,13 @@ namespace CompareLogsUI
                // throw e;
             }
             
-        }
-        private FlowDocument StrsToTexBoxDoc(string Keyword, List<string> LogLineResults)
+        }    
+
+        void CompareTwoLogs(string keyword)
         {
-            FlowDocument Doc = new FlowDocument();
-            foreach (var item in LogLineResults)
-            {
-                //Paragraph p1 = new Paragraph(new Run(Keyword)); // Paragraph 类似于 html 的 P 标签  
-                //p1.Foreground = new SolidColorBrush(Colors.Green);//设置字体颜色
-
-                Paragraph p2 = new Paragraph();
-                p2.Inlines.Add(new Run(Keyword + item)); // Paragraph 类似于 html 的 P 标签          
-                p2.Foreground = new SolidColorBrush(Colors.Black);//设置字体颜色    
-                Doc.Blocks.Add(p2);
-            }
-            return Doc;
+            StandardLogKeyLines = FileIO.SelectLinesContainKeyword(this.StandardLogAllLines, keyword);
+            TargetLogKeyLines = FileIO.SelectLinesContainKeyword(this.TargetLogAllLines, keyword);
+            CompareTwoLogs(this.StandardLogKeyLines, this.TargetLogKeyLines);
         }
-
-        private FlowDocument LogLineResultsToTextBoxDoc(List<LogLineResult> LogLineResults, Color colorMatch, Color colorDisMatch)
-        {
-
-            FlowDocument Doc = new FlowDocument();
-            if (isOnlyShowDifference)
-            {
-                foreach (var item in LogLineResults)
-                {
-                    if(!item.IsMatched)
-                    {
-                        Paragraph p = new Paragraph(); // Paragraph 类似于 html 的 P 标签  
-                        var r = new Run(item.LineKeyword + item.LineContent); // Run 是一个 Inline 的标签  
-                        p.Inlines.Add(r);
-                        p.Foreground = new SolidColorBrush(colorDisMatch);//设置字体颜色 
-                        Doc.Blocks.Add(p);
-                    }                  
-                }
-            }
-            else
-            {
-                foreach (var item in LogLineResults)
-                {
-                    Paragraph p = new Paragraph(); // Paragraph 类似于 html 的 P 标签  
-                    var r = new Run(item.LineKeyword + item.LineContent); // Run 是一个 Inline 的标签  
-                    p.Inlines.Add(r);
-                    p.Foreground = new SolidColorBrush(item.IsMatched ? colorMatch : colorDisMatch);//设置字体颜色 
-                    Doc.Blocks.Add(p);
-                }
-            }
-
-            return Doc;                   
-        }
-
-        static double commonVerticalOffset = 0;
-        private void SynchronizeScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            try
-            {
-                ScrollViewer sv = e.OriginalSource as ScrollViewer;
-                commonVerticalOffset = sv.VerticalOffset;
-                this.TargetLog.ScrollToVerticalOffset(commonVerticalOffset);
-                this.StandardLog.ScrollToVerticalOffset(commonVerticalOffset);
-            }
-            catch
-            { }
-        }
-        private void StandardScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            try
-            {
-                ScrollViewer sv = e.OriginalSource as ScrollViewer;
-                commonVerticalOffset = sv.VerticalOffset;
-                this.TargetLog.ScrollToVerticalOffset(commonVerticalOffset);
-
-            }
-            catch
-            { }
-        }
-
-        private void TargetScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            try
-            {
-                ScrollViewer sv = e.OriginalSource as ScrollViewer;
-                commonVerticalOffset = sv.VerticalOffset;
-                this.StandardLog.ScrollToVerticalOffset(commonVerticalOffset);
-            }
-            catch
-            { }
-        }
-
-        /// <summary>
-        /// demo
-        /// </summary>
-        /// <param name="richTextBox"></param>
-        /// <param name="Doc"></param>      
-        private void Test(FlowDocument Doc, Color textColor, string str)
-        {
-            Paragraph p = new Paragraph(); // Paragraph 类似于 html 的 P 标签  
-            var r = new Run(str); // Run 是一个 Inline 的标签  
-            p.Inlines.Add(r);
-            p.Foreground = new SolidColorBrush(textColor);//设置字体颜色   
-            Doc.Blocks.Add(p);
-        }
-
     }
 }
