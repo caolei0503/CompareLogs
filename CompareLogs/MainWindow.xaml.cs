@@ -17,6 +17,7 @@ using System.IO;
 using CompareLogsParser;
 using System.Windows.Forms;
 //add a comment, just for trying the GIT interact with the VS2015.
+//add a comment, try the VS2015 interact with the GIT.
 
 namespace CompareLogsUI
 {
