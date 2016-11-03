@@ -5,6 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompareLogsUI", "CompareLogs\CompareLogsUI.csproj", "{B0387F32-3BA1-4AA3-B533-82055B53D255}"
 	ProjectSection(ProjectDependencies) = postProject
+		{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56} = {A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}
 		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D} = {5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}
 	EndProjectSection
 EndProject
@@ -14,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTextBox", "SearchTextBox\UIControls\SearchTextBox.csproj", "{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +32,10 @@ Global
 		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FFAA1AB-FF74-46B6-ACF4-E5E9DA7B635D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:MUTSearchBox="clr-namespace:SteIde.SteExplorer.SearchBox;assembly=SearchTextBox"
         xmlns:local="clr-namespace:CompareLogsUI"
         mc:Ignorable="d"
         Title="CompareTwoLogs" Height="350" Width="525">
@@ -35,6 +36,7 @@
         
         <Button Name="OpenStandardLog" Grid.Row="0" Grid.Column="0" Content="StandardLog" Width="80" HorizontalAlignment="Left"></Button>
         <Button Name="OpenTargetLog" Grid.Row="0" Grid.Column="2" Content="TargetLog" Width="80" HorizontalAlignment="Left"></Button>
+        <MUTSearchBox:SearchTextBox Name="SearchKeyword" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
         <CheckBox Name="ShowLogDiff" Grid.Row="1" Grid.Column="2" FlowDirection="LeftToRight">
             <TextBlock FlowDirection="LeftToRight" Text="Only Show Diff"/>
         </CheckBox>
