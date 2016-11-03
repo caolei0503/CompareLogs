@@ -92,13 +92,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="TestLogFiles\TestLogStandard.log" />
+    <None Include="TestLogFiles\TestLogTarget.log" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Src\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CompareLogsParser\CompareLogsParser.csproj">
       <Project>{5ffaa1ab-ff74-46b6-acf4-e5e9da7b635d}</Project>
